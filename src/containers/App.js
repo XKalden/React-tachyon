@@ -6,36 +6,36 @@ import ErrorBoundry from '../components/errorBoundry';
 
 import './App.css';
 
+// Redux magic
+import {setSearchField} from '../action';
+import {connect} from 'react-redux';
 
 class App extends Component{
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             robots: [],
-            searchfield: '',
+     
         }
 
-        this.onSearchChange = this.onSearchChange.bind(this);
     }
 
     componentDidMount(){
+        console.log(this.props.store);
+        console.log(this.props)
+
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(res => res.json())
             .then(user => this.setState({robots: user}));
     }
 
 
-    onSearchChange(event){
-
-        this.setState({searchfield: event.target.value});
-
-    }
-
-
-    
     render(){
+        // redux variables
+        const {searchField, onSearchChange} = this.props;
+        
         const filterRobots = this.state.robots.filter(robot => {
-            return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+            return robot.name.toLowerCase().includes(searchField.toLowerCase());
         });
         
         if(this.state.robots.length === 0){
@@ -45,7 +45,7 @@ class App extends Component{
         return(
             <div className="tc">
                 <h1 className="f2">Rboto</h1>
-                <SearchBox onSearchChange={this.onSearchChange} />
+                <SearchBox searchChange={onSearchChange} />
                 <Scroll>
 
                     <ErrorBoundry>
@@ -58,4 +58,17 @@ class App extends Component{
 }
 
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        searchField: state.searchField,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

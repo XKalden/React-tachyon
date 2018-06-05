@@ -6,13 +6,13 @@ import React from 'react';
 //     return console.log(event);
 // }
 
-const seachBox = ({onSearchChange}) => {
+const seachBox = ({searchChange}) => {
     return (
         <input 
             className="pa3 ba b--green bg-lightest-blue"
             type="search" 
             placeholder="Search Robots" 
-            onChange={(e) => onSearchChange(e)} />
+            onChange={(e) => searchChange(e)} />
     )
 }
 
