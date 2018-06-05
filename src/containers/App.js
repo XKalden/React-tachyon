@@ -7,15 +7,14 @@ import ErrorBoundry from '../components/errorBoundry';
 import './App.css';
 
 // Redux magic
-import {setSearchField} from '../action';
+import {setSearchField, requestRobots} from '../action';
 import {connect} from 'react-redux';
 
 class App extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            robots: [],
-     
+           
         }
 
     }
@@ -24,21 +23,19 @@ class App extends Component{
         console.log(this.props.store);
         console.log(this.props)
 
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(res => res.json())
-            .then(user => this.setState({robots: user}));
+        this.props.onFetchRobot();
     }
 
 
     render(){
         // redux variables
-        const {searchField, onSearchChange} = this.props;
+        const {searchField, onSearchChange, robots, ispedning} = this.props;
         
-        const filterRobots = this.state.robots.filter(robot => {
+        const filterRobots = robots.filter(robot => {
             return robot.name.toLowerCase().includes(searchField.toLowerCase());
         });
         
-        if(this.state.robots.length === 0){
+        if(robots.length === 0 || ispedning){
             return <h1 className="tc">Loading </h1>;
         }
 
@@ -47,7 +44,6 @@ class App extends Component{
                 <h1 className="f2">Rboto</h1>
                 <SearchBox searchChange={onSearchChange} />
                 <Scroll>
-
                     <ErrorBoundry>
                         <CardList robots={filterRobots} />
                     </ErrorBoundry>
@@ -60,13 +56,23 @@ class App extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        searchField: state.searchField,
+        searchField: state.searchRobots.searchField,
+        robots: state.requestRobots.robots,
+        ispedning: state.requestRobots.ispedning,
+        error: state.requestRobots.error
+
     }
 }
 
+
+
+
+
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onFetchRobot: () => dispatch(requestRobots())
     }
 }
 
