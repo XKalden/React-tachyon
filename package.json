@@ -2,7 +2,7 @@
   "name": "robosearch",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/XKalden/React-tachyon",
+  "homepage": "https://xkalden.github.io/React-tachyon/",
   "dependencies": {
     "gh-pages": "^1.2.0",
     "react": "^16.4.0",
