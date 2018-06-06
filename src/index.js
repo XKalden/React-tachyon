@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
     searchRobots, requestRobots
 });
 
-const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk, logger)));
+const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)));
 
 
 const app = (

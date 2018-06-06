@@ -4,6 +4,9 @@ import SearchBox from '../components/searchBox';
 import Scroll from '../components/Scroll';
 import ErrorBoundry from '../components/errorBoundry';
 
+import Header from '../components/Header';
+
+
 import './App.css';
 
 // Redux magic
@@ -38,10 +41,10 @@ class App extends Component{
         if(robots.length === 0 || ispedning){
             return <h1 className="tc">Loading </h1>;
         }
-
+        console.log('app')
         return(
             <div className="tc">
-                <h1 className="f2">Rboto</h1>
+                <Header />
                 <SearchBox searchChange={onSearchChange} />
                 <Scroll>
                     <ErrorBoundry>
@@ -63,11 +66,6 @@ const mapStateToProps = (state) => {
 
     }
 }
-
-
-
-
-
 
 const mapDispatchToProps = (dispatch) => {
     return {
