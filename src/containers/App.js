@@ -23,8 +23,8 @@ class App extends Component{
     }
 
     componentDidMount(){
-        console.log(this.props.store);
-        console.log(this.props)
+        console.log(process.env.REACT_APP_PASS);
+     
 
         this.props.onFetchRobot();
     }
